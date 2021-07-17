@@ -1,12 +1,20 @@
 const bcrypt = require('bcrypt');
+// Import Model class and DataTypes object from Sequelize
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 // create our User model
-class User extends Model{};
+// User inherits all of the functionality the Model class has 
+class User extends Model{
+    // set up method to run an instance data (per user) to check password
+    checkPassword(loginPw) {
+        return bcrypt.compareSync(loginPw, this.password);
+    }
+};
 
-// define table columns and configuration
+// Use the init method to initialize the model's data and configuration passing in two objects as arguments
 User.init(
+    // object 1: defines table columns and configuration
     {
         // TABLE COLUMN DEFINITIONS GO HERE
         // define an id column
@@ -46,6 +54,7 @@ User.init(
             }
         }
     },
+    // The second object configures certain options for the table. 
     {
         // pass in the hooks object to use hooks
         // hooks property must be added to the second object in User.init()
@@ -75,5 +84,5 @@ User.init(
         modelName: 'user'
     }
 );
-
+// export the newly created model so we can use it in other parts of the app
 module.exports = User;
