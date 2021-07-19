@@ -21,3 +21,4 @@ sequelize.sync({force:false}).then(()=>{
     // listen for requests
     app.listen(PORT,()=> console.log('Now listening'));
 })
+// this is just a comment
