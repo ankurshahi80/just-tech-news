@@ -1,31 +1,41 @@
 const path = require('path');
 const express = require('express');
-const routes = require('./controllers');
-// import the connection to sequelize
-const sequelize = require('./config/connection');
+const session = require('express-session');
+const exphbs = require('express-handlebars');
 
 // set up express app
 const app = express();
 const PORT = process.env.PORT || 3001
 
-const exphbs = require('express-handlebars');
+const sequelize = require('./config/connection');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
+const sess = {
+    secret: 'Super secret secret',
+    cookie: {},
+    resave: false,
+    saveUninitialized: true,
+    store: new SequelizeStore({
+        db:sequelize
+    })
+};
+
+app.use(session(sess));
+
 const hbs = exphbs.create({});
 
 app.engine('handlebars',hbs.engine);
 app.set('view engine','handlebars');
 
-// middleware
-// parses incoming requests with JSON payloads and return an object
 app.use(express.json());
-// Parses urlencoded bodies and only looks at requests where the Content-Type header matches the type option
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname,'public')));
 
-//turn on routes
-app.use(routes);
+const routes = require('./controllers/');
+// import the connection to sequelize
 
 //turn on connection to db and server
 sequelize.sync({force:false}).then(()=>{
     // listen for requests
     app.listen(PORT,()=> console.log('Now listening'));
-})
+});

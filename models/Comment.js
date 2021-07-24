@@ -8,11 +8,12 @@ Comment.init(
         // columns will go here
         id:{
             type: DataTypes.INTEGER,
+            allowNull: false,
             primaryKey: true,
             autoIncrement: true,
         },
         comment_text: {
-            type:DataTypes.TEXT,
+            type:DataTypes.STRING,
             allowNull:false,
             validate: {
                 // this means the comment must be atleast four characters long
