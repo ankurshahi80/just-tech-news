@@ -1,6 +1,6 @@
+const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 // Import Model class and DataTypes object from Sequelize
-const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 // create our User model
