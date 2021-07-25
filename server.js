@@ -1,15 +1,9 @@
 const path = require('path');
 const express = require('express');
-<<<<<<< HEAD
-const routes = require('./routes/Index');
-// import the connection to sequelize
-const sequelize = require('./config/connection');
-=======
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const helpers = require('./utils/helpers');
 // const routes = require('./controllers/');
->>>>>>> develop
 
 // set up express app
 const app = express();
@@ -48,9 +42,4 @@ app.use(require('./controllers/'));
 sequelize.sync({force:false}).then(()=>{
     // listen for requests
     app.listen(PORT,()=> console.log('Now listening'));
-<<<<<<< HEAD
-})
-// this is just a comment
-=======
 });
->>>>>>> develop
